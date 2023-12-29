@@ -1,10 +1,9 @@
 from flask import Blueprint, request, jsonify
 from .. import socketio
+from . import processing_routes
 from app.services import ArrhythmiaService
 
 arrhythmia_service = ArrhythmiaService()
-
-processing_routes = Blueprint("processing_routes", __name__)
 
 
 @processing_routes.route("/heartbeat", methods=["POST"])

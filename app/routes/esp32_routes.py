@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_socketio import emit
-from . import socketio
-
-esp32_routes = Blueprint("esp32_routes", __name__)
+from .. import socketio
+from . import esp32_routes
 
 
 @esp32_routes.route("/connect", methods=["POST"])
