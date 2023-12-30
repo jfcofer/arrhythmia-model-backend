@@ -4,17 +4,20 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from .config import Config
 from app.routes import esp32_routes, processing_routes
-import logging
 from logging.handlers import RotatingFileHandler
-
+from flask_restplus import Api
 
 socketio = SocketIO(cors_allowed_origins="*")
+api = Api()
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     CORS(app)
+
+    # Initialize Flask-RESTPlus
+    api.init_app(app, doc="/api/docs")
 
     # Import and register the routes
     app.register_blueprint(esp32_routes, url_prefix="/api/esp32")
