@@ -5,7 +5,7 @@ from flask_cors import CORS
 from .config import Config
 from app.routes import esp32_routes, processing_routes
 from logging.handlers import RotatingFileHandler
-from flask_restplus import Api
+from flask_restx import Api
 
 socketio = SocketIO(cors_allowed_origins="*")
 api = Api()

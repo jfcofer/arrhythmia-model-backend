@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from flask_restplus import Namespace, Resource, fields
+from flask_restx import Namespace, Resource, fields
 from .. import socketio
 from . import processing_routes
 from app.services import ArrhythmiaService

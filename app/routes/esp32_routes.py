@@ -1,5 +1,5 @@
 from flask import jsonify
-from flask_restplus import Namespace, Resource
+from flask_restx import Namespace, Resource
 from .. import socketio
 
 
