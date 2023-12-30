@@ -1,4 +1,4 @@
-from app.models import ArrhythmiaModel
+from app.models.arrhythmia_model import ArrhythmiaModel
 
 
 class ArrhythmiaService:

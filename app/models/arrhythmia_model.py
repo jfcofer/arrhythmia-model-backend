@@ -1,4 +1,5 @@
-from sklearn.externals import joblib  # For scikit-learn <= 0.23
+# Ejemplo para el modelo
+# from sklearn.externals import joblib  # For scikit-learn <= 0.23
 
 # from sklearn.model_selection import train_test_split
 # from sklearn.ensemble import RandomForestClassifier

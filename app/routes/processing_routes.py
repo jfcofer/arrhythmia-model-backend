@@ -1,24 +1,25 @@
 from flask import request, jsonify
 from flask_restx import Namespace, Resource, fields
-from .. import socketio
-from . import processing_routes
-from app.services import ArrhythmiaService
+from app.socketio import socketio
+from app.services.arrhythmia_service import ArrhythmiaService
 
 arrhythmia_service = ArrhythmiaService()
 
-api = Namespace("Processing", description="Routes for processing heartbeat data")
+processing_namespace = Namespace(
+    "Processing", description="Routes for processing heartbeat data"
+)
 
 # Define a model for request and response
-heartbeat_model = api.model(
+heartbeat_model = processing_namespace.model(
     "HeartbeatModel",
     {"heartbeat_data": fields.String(description="Raw heartbeat data")},
 )
 
 
-@api.route("/heartbeat")
+@processing_namespace.route("/heartbeat")
 class Heartbeat(Resource):
-    @api.doc(responses={200: "Success"}, model=heartbeat_model)
-    @api.expect(heartbeat_model)
+    @processing_namespace.doc(responses={200: "Success"}, model=heartbeat_model)
+    @processing_namespace.expect(heartbeat_model)
     def post(self):
         try:
             data = request.json  # Assuming data is sent as JSON in the request payload
@@ -34,3 +35,4 @@ class Heartbeat(Resource):
             return jsonify({"success": True})
         except Exception as e:
             return jsonify({"success": False, "error": str(e)})
+

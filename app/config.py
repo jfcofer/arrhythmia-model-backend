@@ -18,5 +18,8 @@ class Config:
     LOGGING_LOCATION = "logs/app.log"
     LOGGING_LEVEL = "INFO"
 
+    #Configuration for Swagger UI
+    RESTX_SWAGGER_UI_DOC_EXPANSION = 'list'
+
     if not os.path.exists("logs"):
         os.makedirs("logs")

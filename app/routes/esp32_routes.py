@@ -1,14 +1,14 @@
 from flask import jsonify
 from flask_restx import Namespace, Resource
-from .. import socketio
+from app.socketio import socketio
 
 
-api = Namespace("ESP32", description="Routes for ESP32 communication")
+esp32_namespace = Namespace("ESP32", description="Routes for ESP32 communication")
 
 
-@api.route("/connect")
+@esp32_namespace.route("/connect")
 class ConnectESP32(Resource):
-    @api.doc(responses={200: "Connection established with ESP32"})
+    @esp32_namespace.doc(responses={200: "Connection established with ESP32"})
     def post(self):
         global esp32_connected
 
