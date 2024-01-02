@@ -5,6 +5,7 @@ from flask_restx import Api
 from logging.handlers import RotatingFileHandler
 from app.config import Config
 from app.socketio import socketio
+from app.routes import esp32_namespace, processing_namespace
 
 api = Api()
 
@@ -16,7 +17,8 @@ def create_app():
 
     # Initialize Flask-RESTPlus
     api.init_app(app, doc="/api/docs")
-
+    api.add_namespace(esp32_namespace)
+    api.add_namespace(processing_namespace)
 
     # Custom error pages
     @app.errorhandler(404)
