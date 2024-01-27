@@ -3,12 +3,12 @@ from flask_restx import Namespace, Resource
 from app.socketio import socketio
 
 
-esp32_namespace = Namespace("ESP32", description="Routes for ESP32 communication")
+esp32_namespace = Namespace("esp32", description="Ruta para establecer comunicacion con el ESP32")
 
 
 @esp32_namespace.route("/connect")
 class ConnectESP32(Resource):
-    @esp32_namespace.doc(responses={200: "Connection established with ESP32"})
+    @esp32_namespace.doc(responses={200: "Conexion establecida con el ESP32", 500:"Fallos en la conexion con el ESP32"})
     def post(self):
         global esp32_connected
 

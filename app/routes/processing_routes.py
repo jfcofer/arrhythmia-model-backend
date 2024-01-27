@@ -6,20 +6,27 @@ from app.services.arrhythmia_service import ArrhythmiaService
 arrhythmia_service = ArrhythmiaService()
 
 processing_namespace = Namespace(
-    "Processing", description="Routes for processing heartbeat data"
+    "processing", description="Ruta para enviar la informacion recibida del ESP32"
 )
 
 # Define a model for request and response
-heartbeat_model = processing_namespace.model(
-    "HeartbeatModel",
-    {"heartbeat_data": fields.String(description="Raw heartbeat data")},
+heartbeat_input_model = processing_namespace.model(
+    "HeartbeatInputModel",
+    {"heartbeat_input_data": fields.String(description="Raw heartbeat data")},
 )
+heartbeat_output_model = processing_namespace.model(
+    "HeartbeatOutputModel",
+    {"heartbeat_output_data": fields.String(description="Proccessed heartbeat data")},
+)
+
+
 
 
 @processing_namespace.route("/heartbeat")
 class Heartbeat(Resource):
-    @processing_namespace.doc(responses={200: "Success"}, model=heartbeat_model)
-    @processing_namespace.expect(heartbeat_model)
+    @processing_namespace.doc(responses={200: "Success"}, model=heartbeat_output_model)
+    @processing_namespace.doc(responses={500: "Fallos en la conexion con el modelo"})
+    @processing_namespace.expect(heartbeat_input_model)
     def post(self):
         try:
             data = request.json  # Assuming data is sent as JSON in the request payload
@@ -34,5 +41,5 @@ class Heartbeat(Resource):
 
             return jsonify({"success": True})
         except Exception as e:
-            return jsonify({"success": False, "error": str(e)})
+            return jsonify({"success": False, "error": str(e)}), 500
 
