@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_restx import Api
 from logging.handlers import RotatingFileHandler
 from app.config import Config
-from app.socketio import socketio
+from app.events import socketio
 from app.routes import esp32_namespace, processing_namespace
 
 api = Api()
@@ -37,8 +37,4 @@ def create_app():
 
     socketio.init_app(app)
 
-    @socketio.on("connect")
-    def handle_connect():
-        print("Client connected")
-
-    return app, socketio
+    return app
