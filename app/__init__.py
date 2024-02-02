@@ -1,11 +1,12 @@
 # app/__init__.py
 from flask import Flask, render_template
+from flask_session import Session
 from flask_cors import CORS
 from flask_restx import Api
 from logging.handlers import RotatingFileHandler
 from app.config import Config
 from app.events import socketio
-from app.routes import esp32_namespace, processing_namespace
+from app.routes import esp32_namespace
 
 api = Api()
 
@@ -14,11 +15,11 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     CORS(app)
+    Session(app)
 
     # Initialize Flask-RESTPlus
     api.init_app(app, doc="/api/docs")
     api.add_namespace(esp32_namespace)
-    api.add_namespace(processing_namespace)
 
     # Custom error pages
     @app.errorhandler(404)

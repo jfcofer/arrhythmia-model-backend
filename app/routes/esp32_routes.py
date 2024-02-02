@@ -3,32 +3,42 @@ from flask_restx import Namespace, Resource
 from app.socketio import socketio
 
 
-esp32_namespace = Namespace("esp32", description="Ruta para establecer comunicacion con el ESP32")
+esp32_namespace = Namespace(
+    "esp32",
+    description="Ruta para establecer comunicacion con el ESP32, y activar los Web Sockets",
+)
 
 
 @esp32_namespace.route("/connect")
 class ConnectESP32(Resource):
-    @esp32_namespace.doc(responses={200: "Conexion establecida con el ESP32", 500:"Fallos en la conexion con el ESP32"})
+    @esp32_namespace.doc(
+        responses={
+            200: "Conexion establecida con el ESP32",
+            500: "Fallos en la conexion con el ESP32",
+        }
+    )
     def post(self):
-        global esp32_connected
+        esp32_connected = sessio
+        react_connected
 
         # Check if ESP32 is already connected
-        if esp32_connected:
+        if esp32_connected and react_connected:
             return jsonify({"message": "Already connected to ESP32"})
 
-        # Perform ESP32 connection logic (replace with your actual logic)
-        try:
-            # Your ESP32 connection code here
-            # For example, open a serial connection, initialize Wi-Fi, etc.
-            # ...
+        esp32_connected = False
+        react_connected = False
 
+        @socketio.emit("connection_request")
+
+        @socketio.on("connection_response_esp32")
+        def handle_connection_response_esp32():
             esp32_connected = True
-            # Notify the frontend that ESP32 is connected
-            socketio.emit("esp32_connected", {"data": "ESP32 connected"})
 
-            # Example: Send a welcome message to ESP32
-            socketio.emit("esp32_message", {"message": "Welcome, ESP32!"})
+        @socketio.on("connection_response_react")
+        def handle_connection_response_react():
+            react_connected = True
 
-            return jsonify({"message": "Connection established with ESP32"})
-        except Exception as e:
-            return jsonify({"message": f"Failed to connect to ESP32: {str(e)}"}), 500
+        if esp32_connected and react_connected:
+            return jsonify({"message": "Connection established with ESP32"}), 200
+        else:
+            return jsonify({"message": "Failed to connect to ESP32"}), 500

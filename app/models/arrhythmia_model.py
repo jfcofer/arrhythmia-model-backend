@@ -6,8 +6,7 @@ from keras.layers import BatchNormalization
 
 class ArrhythmiaModel:
     def __init__(self):
-        self.model = ArrhythmiaModel
-        data_path = '../assets/best_model.h5'
+        data_path = r"best_model.h5"
         im_shape = (186,1)
         inputs_cnn = Input(shape=(im_shape), name='inputs_cnn')
         conv1_1 = Convolution1D(64, (6), activation='relu', input_shape=im_shape)(inputs_cnn)
@@ -24,10 +23,9 @@ class ArrhythmiaModel:
         dense_end2 = Dense(32, activation='relu')(dense_end1)
         main_output = Dense(5, activation='softmax', name='main_output')(dense_end2)
 
-        model = Model(inputs= inputs_cnn, outputs=main_output)
-        model.compile(optimizer='adam', loss='categorical_crossentropy',metrics = ['accuracy'])
-        model.load_weights(data_path)
-
+        self.model = Model(inputs= inputs_cnn, outputs=main_output)
+        self.model.compile(optimizer='adam', loss='categorical_crossentropy',metrics = ['accuracy'])
+        self.model.load_weights(data_path)
 
     def predict_arrhythmia(self, data):
         class_labels = ['N', 'S', 'V', 'F', 'Q']
