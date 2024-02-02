@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, session
 from flask_restx import Namespace, Resource
 from app.socketio import socketio
 
@@ -13,13 +13,13 @@ esp32_namespace = Namespace(
 class ConnectESP32(Resource):
     @esp32_namespace.doc(
         responses={
-            200: "Conexion establecida con el ESP32",
-            500: "Fallos en la conexion con el ESP32",
+            200: "Conexion establecida con ESP32",
+            500: "Fallos en la conexion con ESP32",
         }
     )
     def post(self):
-        esp32_connected = sessio
-        react_connected
+        esp32_connected = session.get("esp32_connected")
+        react_connected = session.get("react_connected")
 
         # Check if ESP32 is already connected
         if esp32_connected and react_connected:
