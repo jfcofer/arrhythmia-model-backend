@@ -39,6 +39,7 @@ __pycache__/
 *.so
 
 # Logs and databases
+logs/
 *.log
 *.sql
 *.sqlite
