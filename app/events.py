@@ -15,6 +15,7 @@ def handle_new_data(data):
     transmission = False
     if session.get("transmission"):
         transmission = session.get("transmission")
+
     if transmission:
         heartbeat_data = data["heartbeat_data"]
         prediction = arrhythmia_service.predict_arrhythmia(heartbeat_data)
@@ -31,4 +32,4 @@ def handle_stop():
 
 @socketio.on("start_transmission")
 def handle_start():
-    session["transmission"] = False
+    session["transmission"] = True
