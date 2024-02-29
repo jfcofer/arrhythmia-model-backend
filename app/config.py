@@ -6,7 +6,7 @@ class Config:
     DEBUG = True  # Set to False in production
     TESTING = True
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    TF_ENABLE_ONEDNN_OPTS=0
+    TF_ENABLE_ONEDNN_OPTS = 0
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
@@ -20,8 +20,8 @@ class Config:
     LOGGING_LOCATION = "logs/app.log"
     LOGGING_LEVEL = "INFO"
 
-    #Configuration for Swagger UI
-    RESTX_SWAGGER_UI_DOC_EXPANSION = 'list'
+    # Configuration for Swagger UI
+    RESTX_SWAGGER_UI_DOC_EXPANSION = "list"
 
     if not os.path.exists("logs"):
         os.makedirs("logs")

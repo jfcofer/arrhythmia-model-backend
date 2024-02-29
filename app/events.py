@@ -12,6 +12,7 @@ def handle_connect():
 
 @socketio.on("heartbeat_input")
 def handle_new_data(data):
+    print(f"Data received {data}")
     transmission = False
     if session.get("transmission"):
         transmission = session.get("transmission")
@@ -28,8 +29,10 @@ def handle_new_data(data):
 @socketio.on("stop_transmission")
 def handle_stop():
     session["transmission"] = False
+    print("Transmission Disabled")
 
 
 @socketio.on("start_transmission")
 def handle_start():
     session["transmission"] = True
+    print("Transmission Enabled")
