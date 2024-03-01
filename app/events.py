@@ -1,6 +1,9 @@
 from app.services.arrhythmia_service import ArrhythmiaService
 from app.socketio import socketio
+from app.services import ConnectionManager
 from flask import session
+
+connection_manager = ConnectionManager()
 
 arrhythmia_service = ArrhythmiaService
 
@@ -8,6 +11,14 @@ arrhythmia_service = ArrhythmiaService
 @socketio.on("connect")
 def handle_connect():
     print("Client connected")
+
+
+socketio.on("connection_response_esp32")(
+    connection_manager.handle_connection_response_esp32
+)
+socketio.on("connection_response_client")(
+    connection_manager.handle_connection_response_client
+)
 
 
 @socketio.on("heartbeat_input")

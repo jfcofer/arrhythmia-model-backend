@@ -1,13 +1,13 @@
-from flask import jsonify, session
+from flask import jsonify
 from flask_restx import Namespace, Resource
-from app.socketio import socketio
-
+from app.events import socketio
+from app.events import connection_manager
+from time import sleep
 
 esp32_namespace = Namespace(
     "esp32",
     description="Ruta para establecer comunicacion con el ESP32, y activar los Web Sockets",
 )
-
 
 @esp32_namespace.route("/connect")
 class ConnectESP32(Resource):
@@ -18,27 +18,11 @@ class ConnectESP32(Resource):
         }
     )
     def post(self):
-        esp32_connected = session.get("esp32_connected")
-        react_connected = session.get("react_connected")
+        socketio.emit("connection_request")
 
-        # Check if ESP32 is already connected
-        if esp32_connected and react_connected:
-            return jsonify({"message": "Already connected to ESP32"})
+        for _ in range(10):  # Espera hasta 10 segundos
+            if connection_manager.is_connected():
+                return jsonify({"message": "Connection established with ESP32"}), 200
+            sleep(1)
 
-        esp32_connected = False
-        react_connected = False
-
-        @socketio.emit("connection_request")
-
-        @socketio.on("connection_response_esp32")
-        def handle_connection_response_esp32():
-            esp32_connected = True
-
-        @socketio.on("connection_response_react")
-        def handle_connection_response_react():
-            react_connected = True
-
-        if esp32_connected and react_connected:
-            return jsonify({"message": "Connection established with ESP32"}), 200
-        else:
-            return jsonify({"message": "Failed to connect to ESP32"}), 500
+        return jsonify({"message": "Failed to connect to ESP32"}), 500
