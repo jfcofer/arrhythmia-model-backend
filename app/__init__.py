@@ -1,6 +1,5 @@
 # app/__init__.py
 from flask import Flask, render_template
-from flask_session import Session
 from flask_cors import CORS
 from flask_restx import Api
 from logging.handlers import RotatingFileHandler
@@ -15,7 +14,6 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     CORS(app)
-    Session(app)
 
     # Initialize Flask-RESTPlus
     api.init_app(app, doc="/api/docs")

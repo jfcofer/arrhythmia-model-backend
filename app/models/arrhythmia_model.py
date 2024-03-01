@@ -3,7 +3,7 @@ from keras.models import load_model
 
 class ArrhythmiaModel:
     def __init__(self):
-        model_filepath = "model.keras"
+        model_filepath = "./app/models/model.keras"
         self.model = load_model(model_filepath)
 
     def predict_arrhythmia(self, data):
